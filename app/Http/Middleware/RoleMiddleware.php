@@ -10,18 +10,17 @@ class RoleMiddleware
      * Handle an incoming request.
      * @param $request
      * @param Closure $next
-     * @param $role
+     * @param $roles
      * @param null $permission
      * @return mixed
      */
-    public function handle($request, Closure $next, $role, $permission = null)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if(!auth()->user()->hasRole($role)) {
-            abort(404);
+
+        if(!auth("sanctum")->user()->hasRole($roles)) {
+            return response()->json(['msg' =>'You user doesnt\'t have right role for this route'], 403);
         }
-        if($permission !== null && !auth()->user()->can($permission)) {
-            abort(404);
-        }
+
         return $next($request);
     }
 }

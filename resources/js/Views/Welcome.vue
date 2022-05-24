@@ -5,6 +5,9 @@
         <router-link class="px-6 " :to="{ name: 'home' }">
           В личный кабинет
         </router-link>
+        <router-link class="p-2 mr-4" :to="{ name: 'api-methods' }">
+          Список методов API
+        </router-link>
       </div>
       <div v-else>
         <router-link class="px-6 " :to="{ name: 'login' }">
@@ -28,18 +31,22 @@
                 <a href="https://github.com/Slashere">github.com/Slashere</a>
             </div>
         </div>
+    <Countdown deadline="August 22, 2022"></Countdown>
   </div>
 
 </template>
 
 
 <script>
+import Countdown from '../components/Countdown.vue';
+
 export default {
     data() {
         return {
             auth : true
         }
     },
+    components: { Countdown },
     computed : {
       user() {
         return this.$store.getters.user ;

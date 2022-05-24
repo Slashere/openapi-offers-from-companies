@@ -58,6 +58,7 @@
 import CircleSvg from '../components/CircleSvg.vue'
 import { XIcon } from '@heroicons/vue/solid';
 import Errors from '../components/Errors.vue';
+
 export default {
     components : {
         XIcon,

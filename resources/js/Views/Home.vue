@@ -1,18 +1,7 @@
 <template>
   <div class="max-w-screen-lg mx-auto text-gray-900">
-    <div class="flex justify-center">
-        <div class="flex-1">
-            <div class="border w-auto">
-                <div  class="border p-4 font-semibold ">Личный кабинет</div>
-
-                <div class="p-4 bg-white">
-                    <p>Вы в личном кабинете !</p>
-                    <p>Ваша роль: {{this.role}}</p>
-                </div>
-
-            </div>
-          </div>
-      </div>
+      <div class="mb-6 text-center tracking-wider text-8xl sm:mb-8 sm:text-8xl">Добро пожаловать в личный кабинет. </div>
+      <div class="mb-6 text-center tracking-wider text-8xl sm:mb-8 sm:text-8xl">Ваша роль: {{this.role}}</div>
     </div>
 </template>
 
@@ -24,12 +13,21 @@ import Errors from '../components/Errors.vue';
 import Success from '../components/Success.vue';
 import moment from 'moment'
 import CircleSvg from '../components/CircleSvg.vue';
+
+import New from './Companies/New.vue';
+import Status from './Companies/Status.vue';
+import Todos from './Companies/Todos.vue';
+
+
 export default {
     components : {
         XIcon,
         Errors,
         Success,
-        CircleSvg
+        CircleSvg,
+        New,
+        Status,
+        Todos
     },
     data() {
         return {
@@ -46,6 +44,12 @@ export default {
         user() {
             return this.$store.getters.user
         },
+        userRoles() {
+            return this.$store.getters.userRoles ;
+        },
+        userPermissions() {
+            return this.$store.getters.userPermissions ;
+        },
         verified() {
             return this.$store.getters.verified
         }
@@ -61,7 +65,7 @@ export default {
     mounted() {
         this.name = this.user.name
         this.email = this.user.email
-        this.role = this.user.roles[0].name
+        this.role = this.userRoles[0].name
     },
 
 

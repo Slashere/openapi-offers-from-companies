@@ -8,23 +8,49 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    //
 
-    public function __invoke(Request $request)
+//    public function __construct()
+//    {
+//        $this->middleware(function ($request, $next) {
+//            if(auth("sanctum")->check()){
+//                return $next($request);
+//            } else {
+//                return response()->json();
+//            }
+//        });
+//    }
+
+    public function getUserData(Request $request)
     {
         if(auth("sanctum")->check()){
-            $response = response()->json(auth("sanctum")->user());
-            $data = $response->getData();
-            $user = User::find($data->id);
+            return response()->json(auth("sanctum")->user());
+        }
+        return '';
+    }
+
+    public function getUserRoles(Request $request)
+    {
+        if(auth("sanctum")->check()){
+            $userID = auth("sanctum")->user()->id;
+            $user = User::find($userID);
+            if ($user !== null) {
+                $userRole = $user->roles;
+                return response()->json($userRole);
+            }
+        }
+        return '';
+    }
+
+    public function getUserPermissions(Request $request)
+    {
+        if(auth("sanctum")->check()){
+            $userID = auth("sanctum")->user()->id;
+            $user = User::find($userID);
             if ($user !== null) {
                 $userPermissions = $user->permissions;
-                $userRole = $user->roles;
-                $data->permissions = $userPermissions;
-                $data->roles = $userRole;
+                return response()->json($userPermissions);
             }
-            $response->setData($data);
-
-            return $response;
         }
+        return '';
     }
 }

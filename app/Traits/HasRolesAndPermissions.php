@@ -21,11 +21,12 @@ trait HasRolesAndPermissions
     }
 
     /**
-     * @param mixed ...$roles
+     * @param $roles
      * @return bool
      */
-    public function hasRole(... $roles ) {
+    public function hasRole($roles) {
         foreach ($roles as $role) {
+//            dd($this->roles->contains('slug', $role));
             if ($this->roles->contains('slug', $role)) {
                 return true;
             }
@@ -37,9 +38,10 @@ trait HasRolesAndPermissions
      * @param $permission
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission($permissions)
     {
-        return (bool) $this->permissions->where('slug', $permission)->count();
+//        dd($this->permissions->pluck('slug')->toArray('slug'));
+        return !array_diff($permissions, $this->permissions->pluck('slug')->toArray('slug'));
     }
 
     /**

@@ -32,6 +32,8 @@ class RegisterController extends Controller
             event(new Registered($user));
             $token = $user->createToken('access_token')->plainTextToken;
             return response()->json(["token" => $token , "type" => "Bearer"]);
+        } else {
+            return response()->json(["message" => 'user has not created', "errors" => ['user'  => 'not created']]);
         }
     }
 }

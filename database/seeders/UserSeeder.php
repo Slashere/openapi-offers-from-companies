@@ -21,12 +21,16 @@ class UserSeeder extends Seeder
         $companyRole = Role::where('slug', 'company')->first();
         $clientRole = Role::where('slug', 'client')->first();
 
-        $seeOffersPermission = Permission::where('slug','see-offers')->first();
-        $createOffersPermission = Permission::where('slug','create-offers')->first();
-        $deleteOffersPermission = Permission::where('slug','delete-offers')->first();
-        $editOffersPermission = Permission::where('slug','edit-offers')->first();
+        $viewAnyOfferPermission = Permission::where('slug','view-any-offer')->first();
+        $viewOfferPermission = Permission::where('slug','view-offer')->first();
+        $createOfferPermission = Permission::where('slug','create-offer')->first();
+        $deleteOfferPermission = Permission::where('slug','delete-offer')->first();
+        $editOfferPermission = Permission::where('slug','edit-offer')->first();
+
+        $viewAnyCompanyPermission = Permission::where('slug','view-any-company')->first();
+        $viewCompanyPermission = Permission::where('slug','view-company')->first();
         $createCompanyPermission = Permission::where('slug','create-company')->first();
-        $editCompanyPermission = Permission::where('slug','edit-company')->first();
+        $editCompanyPermission = Permission::where('slug','update-company')->first();
         $deleteCompanyPermission = Permission::where('slug','delete-company')->first();
 
         $adminUser = new User();
@@ -36,10 +40,14 @@ class UserSeeder extends Seeder
         $adminUser->password = bcrypt('secret');
         $adminUser->save();
         $adminUser->roles()->attach($adminRole);
-        $adminUser->permissions()->attach($seeOffersPermission);
-        $adminUser->permissions()->attach($createOffersPermission);
-        $adminUser->permissions()->attach($deleteOffersPermission);
-        $adminUser->permissions()->attach($editOffersPermission);
+
+        $adminUser->permissions()->attach($viewAnyOfferPermission);
+        $adminUser->permissions()->attach($viewOfferPermission);
+        $adminUser->permissions()->attach($createOfferPermission);
+        $adminUser->permissions()->attach($deleteOfferPermission);
+        $adminUser->permissions()->attach($editOfferPermission);
+
+        $adminUser->permissions()->attach($viewAnyCompanyPermission);
         $adminUser->permissions()->attach($createCompanyPermission);
         $adminUser->permissions()->attach($editCompanyPermission);
         $adminUser->permissions()->attach($deleteCompanyPermission);
@@ -52,9 +60,9 @@ class UserSeeder extends Seeder
         $companyUser->password = bcrypt('secret');
         $companyUser->save();
         $companyUser->roles()->attach($companyRole);
-        $companyUser->permissions()->attach($createOffersPermission);
-        $companyUser->permissions()->attach($deleteOffersPermission);
-        $companyUser->permissions()->attach($editOffersPermission);
+        $companyUser->permissions()->attach($createOfferPermission);
+        $companyUser->permissions()->attach($deleteOfferPermission);
+        $companyUser->permissions()->attach($editOfferPermission);
         $companyUser->permissions()->attach($createCompanyPermission);
         $companyUser->permissions()->attach($editCompanyPermission);
         $companyUser->permissions()->attach($deleteCompanyPermission);
@@ -67,6 +75,7 @@ class UserSeeder extends Seeder
         $clientUser->password = bcrypt('secret');
         $clientUser->save();
         $clientUser->roles()->attach($clientRole);
-        $clientUser->permissions()->attach($seeOffersPermission);
+        $clientUser->permissions()->attach($viewAnyOfferPermission);
+        $clientUser->permissions()->attach($viewCompanyPermission);
     }
 }

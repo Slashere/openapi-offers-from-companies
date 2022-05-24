@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOffersTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class CreateOffersTable extends Migration
      */
     public function up()
     {
-        Schema::create('offers', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->integer('quantity');
-            $table->boolean('enabled');
-            $table->dateTime('active_from');
-            $table->dateTime('active_until');
-            $table->float('price');
-            $table->integer('sale_percent');
+            $table->integer('address');
+            $table->json('coordinates');
             $table->string('image_src');
-            $table->foreignId('company_id');
+            $table->foreignId('city_id');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offers');
+        Schema::dropIfExists('companies');
     }
 }

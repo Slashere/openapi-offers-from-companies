@@ -8,6 +8,10 @@ use App\Traits\HasRolesAndPermissions;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'email_verified_at',
+        'city_id',
         'password',
     ];
 
@@ -55,5 +60,15 @@ class User extends Authenticatable
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
+    }
+
+    public function city(): belongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function company(): hasOne
+    {
+        return $this->hasOne(Company::class);
     }
 }

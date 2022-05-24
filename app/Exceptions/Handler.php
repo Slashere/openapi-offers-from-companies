@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Exception;
 
 class Handler extends ExceptionHandler
 {
@@ -12,9 +15,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [
-        //
-    ];
+    protected $dontReport = [];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
@@ -34,8 +35,14 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // reportable
+        $this->renderable(function (Throwable $e) {
+            if ($e instanceof NotFoundHttpException) {
+                return response()->json(['message' => 'no resource was found'], 404);
+            }
+            dd($e);
+            return response(['error' => $e->getMessage()], $e->getCode() ?: 400);
         });
     }
+
 }
